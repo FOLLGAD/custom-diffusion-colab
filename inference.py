@@ -7,6 +7,7 @@ import sys
 import gradio as gr
 import PIL.Image
 import numpy as np
+import time
 
 import torch
 from diffusers import StableDiffusionPipeline
@@ -78,4 +79,5 @@ class InferencePipeline:
         torch.cuda.empty_cache()
         out = out.images
         out = PIL.Image.fromarray(np.hstack([np.array(x) for x in out]))
+        out.save(f"./out/{prompt}-{round(time.time() * 1000)}")
         return out
